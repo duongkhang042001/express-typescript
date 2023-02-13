@@ -14,9 +14,7 @@ app.use(express.json());
 
 app.use("/", routes);
 
-connectToDatabase(
-  "mongodb+srv://admin:EWZFKT3oHOjpF0Yb@cluster.wnew5tt.mongodb.net/express-ts?retryWrites=true&w=majority"
-);
+connectToDatabase(JSON.stringify(process.env.MONGODB_URL));
 
 app.listen(port, () => {
   console.log(`⚡️ [Server]: Server is running at http://localhost:${port}`);
