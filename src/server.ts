@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use("/", routes);
 
-connectToDatabase(JSON.stringify(process.env.MONGODB_URL));
+connectToDatabase(String(process.env.MONGODB_URL));
 
 app.listen(port, () => {
   console.log(`⚡️ [Server]: Server is running at http://localhost:${port}`);
