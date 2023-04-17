@@ -12,7 +12,8 @@ app.use("/public", express.static("public"));
 
 app.use(express.json());
 
-app.use("/", routes);
+app.get("/", (req, res) => res.send("Welcome to API!"));
+app.use("/v1", routes);
 
 connectToDatabase(String(process.env.MONGODB_URL));
 
