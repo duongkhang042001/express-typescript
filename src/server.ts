@@ -5,7 +5,7 @@ import { connectToDatabase } from "./config/database";
 
 dotenv.config();
 
-const main = () => {
+const main = async () => {
     const app: Express = express();
     const port = process.env.APP_PORT || 8000;
 
@@ -14,9 +14,10 @@ const main = () => {
     app.use(express.json());
 
     app.get("/", (req, res) => res.send("Welcome to API!"));
+
     app.use("/v1", routes);
 
-    connectToDatabase(String(process.env.MONGODB_URL));
+    await connectToDatabase(String(process.env.MONGODB_URL));
 
     app.listen(port, () => {
         console.log(
