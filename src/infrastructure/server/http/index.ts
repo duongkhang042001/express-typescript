@@ -1,45 +1,54 @@
-import { Server } from "http";
-import express, { Express } from "express";
-import { AddressInfo } from "net";
+import express, { Application } from 'express';
+import http from 'http';
 
-let connection: Server;
+export class ExpressServer {
+    private app: Application;
+    private server?: http.Server;
+    private readonly port: number;
 
-async function startWebServer() {
-    const expressApp: Express = express();
+    constructor(port: number) {
+        this.port = port;
+        this.app = express();
+        this.setupRoutes();
+        this.setupMiddleware();
+    }
 
-    const APIAddress = await openConnection(expressApp);
-    return APIAddress;
-}
+    private setupMiddleware(): void {
+        this.app.use(express.json());
+    }
 
+    private setupRoutes(): void {
+        this.app.get('/helth', (req, res) => {
+            res.json({ message: 'Server is running' });
+        });
+    }
 
-async function stopWebServer() {
-    return new Promise<void>((resolve) => {
-        if (connection !== undefined) {
-            connection.close(() => {
-                resolve();
+    public start(): void {
+        this.server = this.app.listen(this.port, () => {
+            console.log(`Server is running on port ${this.port}`);
+        });
+        this.setupGracefulShutdown();
+    }
+
+    public stop(): void {
+        if (this.server) {
+            this.server.close((err) => {
+                if (err) {
+                    console.error('Error during server shutdown', err);
+                } else {
+                    console.log('Server has been stopped gracefully');
+                }
             });
         }
-    });
+    }
+
+    private setupGracefulShutdown(): void {
+        const shutdown = () => {
+            console.log('Received shutdown signal');
+            this.stop();
+        };
+
+        process.on('SIGINT', shutdown);
+        process.on('SIGTERM', shutdown);
+    }
 }
-
-async function openConnection(
-    expressApp: express.Application
-): Promise<AddressInfo> {
-    return new Promise((resolve) => {
-        connection = expressApp.listen(3000, () => {
-            resolve(connection.address() as AddressInfo);
-        });
-    });
-}
-
-process.on("SIGINT", async () => {
-    await stopWebServer();
-    process.exit(0);
-});
-
-process.on("SIGTERM", async () => {
-    await stopWebServer();
-    process.exit(0);
-});
-
-export { startWebServer, stopWebServer };

@@ -1,43 +1,17 @@
-// {
-//     "compilerOptions": {
-//         "target": "ESNext",
-//         "module": "CommonJS",
-//         "outDir": "./dist",
-//         "rootDir": ".",
-//         "baseUrl": ".",
-//         "strict": true,
-//         "moduleResolution": "node",
-//         "esModuleInterop": true,
-//         "skipLibCheck": true,
-//         "allowSyntheticDefaultImports": true,
-//         "forceConsistentCasingInFileNames": true
-//     },
-//     "paths": {
-//         "@/*": ["./src/*"]
-//     },
-//     "exclude": ["node_modules"],
-//     "include": ["./**/*.ts"]
-// }
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "module": "CommonJS",
-        "outDir": "./dist",
-        "baseUrl": ".",
-        "strict": true,
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-        "lib": [
-            "dom",
-            "ESNext"
-        ],
-        "paths": {
-            "@/*": [
-                "./src/*"
-            ]
-        }
-    }
-}
+      "target": "es2020",
+      "module": "commonjs",
+      "typeRoots": ["@types"],
+      "allowJs": true,
+      "checkJs": false,
+      "outDir": ".dist",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "noImplicitAny": false,
+      "skipLibCheck": true
+    },
+    "exclude": ["node_modules"]
+  }
+  
