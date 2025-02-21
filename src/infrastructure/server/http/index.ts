@@ -18,7 +18,7 @@ export class ExpressServer {
     }
 
     private setupRoutes(): void {
-        this.app.get('/helth', (req, res) => {
+        this.app.get('/health', (req, res) => {
             res.json({ message: 'Server is running' });
         });
     }
