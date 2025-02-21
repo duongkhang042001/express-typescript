@@ -1,3 +1,12 @@
-import { main } from "./src/server";
+import express from 'express';
+import http from 'http';
+async function start() {
+    const app = express();
 
-main();
+    const httpServer = http.createServer((req, res) => {
+        app(req, res);
+    });
+
+    const port = 3000;
+    
+}
